@@ -18,7 +18,11 @@ public class RPSTourney {
       //get first and last character in every element of moveList
       for(String ele : moveList){
          String opponentMove = ele.split("")[0];
-         String response = ele.split("")[2];
+         //String response = ele.split("")[2]; <-This is for part 1
+
+         // mutate answers for part 2
+         String response = mutateAnswer(opponentMove, ele.split("")[2]);
+
          int moveValue = checkMoveValue(response);
          int resultValue = checkResult(opponentMove, response);
          int roundTotal = moveValue + resultValue;
@@ -75,5 +79,46 @@ public class RPSTourney {
       } else {
          return 3;
       }
+   }
+
+   private static String mutateAnswer(String opMove, String answer){
+      String mutatedAnswer = null;
+
+      if(opMove.equals("A") && answer.equals("X")){
+         mutatedAnswer = "Z";
+      }
+
+      if(opMove.equals("A") && answer.equals("Y")){
+         mutatedAnswer = "X";
+      }
+
+      if(opMove.equals("A") && answer.equals("Z")){
+         mutatedAnswer = "Y";
+      }
+
+      if(opMove.equals("B") && answer.equals("X")){
+         mutatedAnswer = "X";
+      }
+
+      if(opMove.equals("B") && answer.equals("Y")){
+         mutatedAnswer = "Y";
+      }
+
+      if(opMove.equals("B") && answer.equals("Z")){
+         mutatedAnswer = "Z";
+      }
+
+      if(opMove.equals("C") && answer.equals("X")){
+         mutatedAnswer = "Y";
+      }
+
+      if(opMove.equals("C") && answer.equals("Y")){
+         mutatedAnswer = "Z";
+      }
+
+      if(opMove.equals("C") && answer.equals("Z")){
+         mutatedAnswer = "X";
+      }
+      return mutatedAnswer; 
    }
 }
