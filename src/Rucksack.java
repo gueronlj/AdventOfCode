@@ -12,43 +12,62 @@ public class Rucksack {
             int length = singleRow.length();
             char[] firstHalf = new char[length/2];
             singleRow.getChars(0, (length/2), firstHalf, 0);
+
             char[] secondHalf = new char[length/2];
             singleRow.getChars((length/2), length, secondHalf, 0);
-            printArray(firstHalf);   
-            printArray(secondHalf);
+            //printArray(firstHalf);   
+            //printArray(secondHalf);
             findMatches(firstHalf, secondHalf);
+            
         }
+        System.out.println(valueMap());
     }
 
     private static void printArray(char[] array){
-        System.out.println("\n\n");
+        System.out.println("\r\n");
         for (char c : array) {
             System.out.print(c);
         }
-        System.out.println("\n");
+        //System.out.println("\n");
     }
 
-    private static void findMatches(char[] firstHalf, char[] secondHalf){
+    private static void findMatches(char[] a, char[] b){
         ArrayList<Character> matches = new ArrayList<Character>();
-
-        for (char c : firstHalf){
-            if (Arrays.asList(secondHalf).contains(c)){
-                
-                matches.add(c);
-                System.out.println(c);
-            }
+        ArrayList<Character> uniqueList = new ArrayList<Character>();
+        //System.out.println(matches);
+        boolean[] charSet = new boolean[256]; // Assuming ASCII characters 
+        // Mark characters from array a 
+        for (char c : a) { 
+            charSet[c] = true; 
         }
-        System.out.println(matches);
+        // Check if any character from array b exists in array a 
+        for (char c : b) { 
+            if (charSet[c]) {
+                matches.add(c);
+            } 
+
+        }
+        uniqueList.add(matches.get(0));
     }
 
-    private static void calculatePriority(char[] matches){
+    private static int calculateTotal(char key){      
+        int value = valueMap().get(key);
+        return value;
+    }
+
+
+    private static HashMap<String, Integer> valueMap(){
         //hashmap to store the priority of each character
-        HashMap<Character, Integer> priorities = new HashMap<Character, Integer>();
-    
-        for (Character key : priorities.keySet()) {
-            int value = 0;
-            
-            // do something with the key
-          }
+        HashMap<String, Integer> priorities = new HashMap<String, Integer>();
+
+        String[] alphabet = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+        int value = 1;
+        for (String c : alphabet) {          
+            priorities.put(c, value);       
+            value = value + 1;
+            priorities.put(c.toUpperCase(), value + 25);  
+        }
+
+        return priorities;
     }
 }
