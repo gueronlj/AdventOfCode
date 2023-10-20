@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Rucksack {
@@ -13,8 +14,8 @@ public class Rucksack {
             singleRow.getChars(0, (length/2), firstHalf, 0);
             char[] secondHalf = new char[length/2];
             singleRow.getChars((length/2), length, secondHalf, 0);
-            //printArray(firstHalf);   
-            //printArray(secondHalf);
+            printArray(firstHalf);   
+            printArray(secondHalf);
             findMatches(firstHalf, secondHalf);
         }
     }
@@ -31,13 +32,13 @@ public class Rucksack {
         ArrayList<Character> matches = new ArrayList<Character>();
 
         for (char c : firstHalf){
-            for (char d : secondHalf){
-                if (c == d){
-                    matches.add(c);
-                    //System.out.println(c);
-                }
+            if (Arrays.asList(secondHalf).contains(c)){
+                
+                matches.add(c);
+                System.out.println(c);
             }
         }
+        System.out.println(matches);
     }
 
     private static void calculatePriority(char[] matches){
@@ -46,6 +47,7 @@ public class Rucksack {
     
         for (Character key : priorities.keySet()) {
             int value = 0;
+            
             // do something with the key
           }
     }
