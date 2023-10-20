@@ -1,8 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Rucksack {
+    public static ArrayList<Character> uniqueList = new ArrayList<Character>();
+
     public static void main(String[] args){
         //SEPARATE THE DATA INTO ROWS   
         String data = AoCInputs.rucksack();
@@ -15,12 +16,10 @@ public class Rucksack {
 
             char[] secondHalf = new char[length/2];
             singleRow.getChars((length/2), length, secondHalf, 0);
-            //printArray(firstHalf);   
-            //printArray(secondHalf);
-            findMatches(firstHalf, secondHalf);
-            
+            findMatches(firstHalf, secondHalf);            
         }
-        System.out.println(valueMap());
+
+        calculateTotal();
     }
 
     private static void printArray(char[] array){
@@ -33,7 +32,6 @@ public class Rucksack {
 
     private static void findMatches(char[] a, char[] b){
         ArrayList<Character> matches = new ArrayList<Character>();
-        ArrayList<Character> uniqueList = new ArrayList<Character>();
         //System.out.println(matches);
         boolean[] charSet = new boolean[256]; // Assuming ASCII characters 
         // Mark characters from array a 
@@ -45,17 +43,29 @@ public class Rucksack {
             if (charSet[c]) {
                 matches.add(c);
             } 
-
         }
         uniqueList.add(matches.get(0));
+        
     }
 
-    private static int calculateTotal(char key){      
+    private static int calculateValue(String key){      
         int value = valueMap().get(key);
         return value;
     }
 
-
+    private static void calculateTotal(){
+       //Turn uniqueList into String[]
+        String[] sringArray= new String[uniqueList.size()];
+        for (int i = 0; i < uniqueList.size(); i++) {
+            sringArray[i] = String.valueOf(uniqueList.get(i));
+        }
+        //loop through stringArray and calculate the value of each character
+        int total = 0;
+        for(String s : sringArray){
+            total = total + calculateValue(s);
+        }
+        System.out.println(total);
+    }
     private static HashMap<String, Integer> valueMap(){
         //hashmap to store the priority of each character
         HashMap<String, Integer> priorities = new HashMap<String, Integer>();
