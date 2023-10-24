@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class Rucksack {
     public static ArrayList<Character> uniqueList = new ArrayList<Character>();
+    public static ArrayList<String[]> trios = new ArrayList<>();
 
     public static void main(String[] args) throws IOException{
         //SEPARATE THE DATA INTO ROWS   
@@ -20,10 +21,16 @@ public class Rucksack {
 
             char[] secondHalf = new char[length/2];
             singleRow.getChars((length/2), length, secondHalf, 0);
-            findMatches(firstHalf, secondHalf);            
+            //findMatches(firstHalf, secondHalf);            
         }
-        //calculateTotal();
-        readFile();
+        groupIntoTrios();
+        printTrios();
+        for(String[] trio : trios){
+            compareTrio(trio);
+        }
+        System.out.println(uniqueList);
+        calculateTotal();
+        System.out.println(uniqueList.size());
     }
 
     private static void findMatches(char[] a, char[] b){
@@ -76,9 +83,8 @@ public class Rucksack {
         return priorities;
     }
 
-    private static void readFile(){
+    private static void groupIntoTrios(){
         //read text file
-        ArrayList<String[]> trios = new ArrayList<>();
         BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader("data.txt"));
@@ -102,7 +108,10 @@ public class Rucksack {
             }
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}    
+    }
+
+    private static void printTrios() {
         //Print the trios
         for (String[] array : trios) { 
             for (String s : array) { 
@@ -110,6 +119,31 @@ public class Rucksack {
             }
             //Print blank line in between trios
             System.out.println(); 
+        }
+    }
+    private static void compareTrio(String[] trio) {
+        //convert each string in the trio to a char array
+        char[] first = trio[0].toCharArray();
+        char[] second = trio[1].toCharArray();
+        char[] third = trio[2].toCharArray();
+
+        ArrayList<Character> possibleMatches = new ArrayList<Character>();
+        boolean[] charSet = new boolean[256]; // Assuming ASCII characters 
+        // Mark characters from first 
+        for (char i : first) { 
+            charSet[i] = true; 
+        }
+        // Check if any character from second exists in first
+        for (char i : second) { 
+            if (charSet[i]) {
+                possibleMatches.add(i);
+            } 
+        }
+        // Check if any character from third exists in both first and second
+        for(char i : third){
+            if (charSet[i] && possibleMatches.contains(i)){
+                uniqueList.add(i);
+            }
         }
     }
 }
