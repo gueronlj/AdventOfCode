@@ -5,9 +5,23 @@ import java.util.ArrayList;
 
 public class day4 {
    public static ArrayList<String[]> pairs = new ArrayList<>();
+   public static ArrayList<Integer[]> intRanges = new ArrayList<>();
+
+   public static int overlaps = 0;
    public static void main(String[] args) {
       fileIntake("cleaning-zones.txt");
-      printPairs();
+      //printPairs();
+      for (String[] pair : pairs) {
+         extractRangesAsInt(pair);
+      }
+      
+      int count = 0;
+      while(count<intRanges.size()){
+         checkForOverlap(intRanges.get(count), intRanges.get(count+1));
+        // System.out.println(intRanges.get(count)[0] + " " + intRanges.get(count)[1]);
+         count += 2;
+      }
+      System.out.println(overlaps);
    }
 
    public static void fileIntake(String fileName) {
@@ -36,4 +50,43 @@ public class day4 {
          System.out.println(); 
       }
    }
+
+   public static void extractRangesAsInt(String[] pair){
+      //split into two strings
+      int min = 0;
+      int max = 0;
+      Integer[] minMax = new Integer[2];
+      for(int i = 0; i < pair.length; i++){
+         String[] splitPair = pair[i].split("-");
+         minMax[0] = Integer.parseInt(splitPair[0]);
+         minMax[1] = Integer.parseInt(splitPair[1]);
+      }
+      intRanges.add(minMax);
+   }
+
+   public static void checkForOverlap(Integer[] first, Integer[] second){
+      //find short ranger
+      Integer[] shortRange = new Integer[2];
+      Integer[] longRange = new Integer[2];
+      if((first[1] - first[0])<(second[1] - second[0])){
+         shortRange = first;
+         longRange = second;
+      } else {
+         shortRange = second;
+         longRange = first;
+      }
+      if(shortRange[0] >= longRange[0] && shortRange[1] <= longRange[1]){
+         System.out.println("Overlap");
+         overlaps++;
+      } else {
+         //print shortRange and longRange
+         for(int i = 0; i < shortRange.length; i++){
+            System.out.print(shortRange[i] + " ");
+         }
+         for(int i = 0; i < longRange.length; i++){
+            System.out.print(longRange[i] + " ");
+         }
+         System.out.println("No overlap");
+      }
+   }  
 }
