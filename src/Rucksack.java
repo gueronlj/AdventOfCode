@@ -25,6 +25,7 @@ public class Rucksack {
         }
         groupIntoTrios();
         printTrios();
+        System.out.println(trios.size());
         for(String[] trio : trios){
             compareTrio(trio);
         }
@@ -129,21 +130,23 @@ public class Rucksack {
 
         ArrayList<Character> possibleMatches = new ArrayList<Character>();
         boolean[] charSet = new boolean[256]; // Assuming ASCII characters 
+
         // Mark characters from first 
         for (char i : first) { 
             charSet[i] = true; 
         }
         // Check if any character from second exists in first
         for (char i : second) { 
-            if (charSet[i]) {
+            if (charSet[i] && !possibleMatches.contains(i)){
                 possibleMatches.add(i);
             } 
         }
+        System.out.println(possibleMatches);
         // Check if any character from third exists in both first and second
-        for(char i : third){
-            if (charSet[i] && possibleMatches.contains(i)){
+        for(char i : possibleMatches){
+            if (new String(third).contains(String.valueOf(i))){
                 uniqueList.add(i);
-            }
+            }         
         }
     }
 }
