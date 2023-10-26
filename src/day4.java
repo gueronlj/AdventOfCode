@@ -10,16 +10,11 @@ public class day4 {
    public static int overlaps = 0;
    public static void main(String[] args) {
       fileIntake("cleaning-zones.txt");
-      //printPairs();
       for (String[] pair : pairs) {
          extractRangesAsInt(pair);
-      }
-      
-      int count = 0;
-      while(count<intRanges.size()){
-         checkForOverlap(intRanges.get(count), intRanges.get(count+1));
-        // System.out.println(intRanges.get(count)[0] + " " + intRanges.get(count)[1]);
-         count += 2;
+      }     
+      for(int i = 0; i < intRanges.size(); i+=2){
+         checkForOverlap(intRanges.get(i), intRanges.get(i+1));
       }
       System.out.println(overlaps);
    }
@@ -52,16 +47,21 @@ public class day4 {
    }
 
    public static void extractRangesAsInt(String[] pair){
-      //split into two strings
-      int min = 0;
-      int max = 0;
-      Integer[] minMax = new Integer[2];
-      for(int i = 0; i < pair.length; i++){
-         String[] splitPair = pair[i].split("-");
-         minMax[0] = Integer.parseInt(splitPair[0]);
-         minMax[1] = Integer.parseInt(splitPair[1]);
+      //split into two strings 
+      String[] firstString = pair[0].split("-");
+      String[] secondString = pair[1].split("-");
+      //convert to int
+      Integer[] first = new Integer[2];
+      Integer[] second = new Integer[2];
+      for(int i = 0; i < firstString.length; i++){
+         first[i] = Integer.parseInt(firstString[i]);
       }
-      intRanges.add(minMax);
+      for(int i = 0; i < secondString.length; i++){
+         second[i] = Integer.parseInt(secondString[i]);
+      }     
+      //add to intRanges
+      intRanges.add(first);
+      intRanges.add(second);
    }
 
    public static void checkForOverlap(Integer[] first, Integer[] second){
