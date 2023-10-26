@@ -14,7 +14,7 @@ public class day4 {
          extractRangesAsInt(pair);
       }     
       for(int i = 0; i < intRanges.size(); i+=2){
-         checkForOverlap(intRanges.get(i), intRanges.get(i+1));
+         checkAnyOverlap(intRanges.get(i), intRanges.get(i+1));
       }
       System.out.println(overlaps);
    }
@@ -62,6 +62,33 @@ public class day4 {
       //add to intRanges
       intRanges.add(first);
       intRanges.add(second);
+   }
+
+   public static void checkAnyOverlap(Integer[] first, Integer[] second){
+      Integer[] earliest = new Integer[2];
+      Integer[] latest = new Integer[2];
+      if(first[0]>second[0]){
+         earliest[0] = second[0];
+         earliest[1] = second[1];
+         latest[0] = first[0];
+         latest[1] = first[1];
+      }else{
+         earliest[0] = first[0];
+         earliest[1] = first[1];
+         latest[0] = second[0];
+         latest[1] = second[1];
+      }
+
+      if( latest[0] <= earliest[1]){
+        for(int i : latest){
+         System.out.println(i);
+        }
+        for(int i : earliest){
+         System.out.println(i);
+        }
+         System.out.println(" Overlap");
+         overlaps++;
+      }
    }
 
    public static void checkForOverlap(Integer[] first, Integer[] second){
