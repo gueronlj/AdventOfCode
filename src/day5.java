@@ -7,6 +7,7 @@ import java.util.Stack;
 public class day5 {
 
    private static ArrayList<String> directionsRaw = new ArrayList<>();
+   private static ArrayList<Integer[]> directionsRefined = new ArrayList<>();
    private static Stack<String> stack1 = new Stack<>();
    private static Stack<String> stack2 = new Stack<>();
    private static Stack<String> stack3 = new Stack<>();
@@ -16,22 +17,23 @@ public class day5 {
    private static Stack<String> stack7 = new Stack<>();
    private static Stack<String> stack8 = new Stack<>();
    private static Stack<String> stack9 = new Stack<>();
-   private static Stack<String> result1 = new Stack<>();
-   private static Stack<String> result2 = new Stack<>();
-   private static Stack<String> result3 = new Stack<>();
-   private static Stack<String> result4 = new Stack<>();
-   private static Stack<String> result5 = new Stack<>();
-   private static Stack<String> result6 = new Stack<>();
-   private static Stack<String> result7 = new Stack<>();
-   private static Stack<String> result8 = new Stack<>();
-   private static Stack<String> result9 = new Stack<>();
+
    public static void main(String[] args){   
-     readFile("day5.txt");
-     buildStacks();
-     printStacks();
-     extractNumberFromDirections(directionsRaw);
-     processDirections(1, 1, 2);
-     printStacks();   
+      readFile("day5.txt");
+      buildStacks();
+      extractNumberFromDirections(directionsRaw);
+      //print directionsRefined
+      for(Integer[] line : directionsRefined){
+         for(Integer i : line){
+            System.out.print(i + " ");
+         }
+         System.out.println();
+      }
+      for (Integer[] line : directionsRefined) {
+         processDirections(line[0], line[1], line[2]);
+      } 
+      printStacks();
+      printTopCrates(); 
    }
 
    private static void readFile(String filename){
@@ -108,91 +110,347 @@ public class day5 {
    private static void extractNumberFromDirections(ArrayList<String> directions){
       for(String line : directions){
          //split each line into a string array
-         int num = 0;
+         Integer[] numArray = new Integer[3];
          String[] stringArray = line.split("");
-         for (String string : stringArray) {
+         String number = line.replaceAll("[^0-9]", "");
+         for (String character : stringArray) {
             //if the string is a number
-            if(string.matches("[0-9]")){
-               //extract number from line
-               String number = line.replaceAll("[^0-9]", "");
-               //convert to int
-               num = Integer.parseInt(number);
+            if(character.matches("[0-9]")){
+               //break number into array[3]
+               String[] trio = number.split("");
+               Integer lastIndex = trio.length - 1;
+               if(trio.length > 3){
+                  //concatonate index 0 and index 1
+                  String firstTwo = trio[0] + trio[1];
+                  //turn into Integer
+                  Integer firstTwoInt = Integer.parseInt(firstTwo);
+                  numArray[0] = firstTwoInt;
+                  numArray[1] = Integer.parseInt(trio[lastIndex-1]);
+                  numArray[2] = Integer.parseInt(trio[lastIndex]);
+               } else {
+                  //convert to integers
+                  for(int i = 0; i < trio.length; i++){
+                     numArray[i] = Integer.parseInt(trio[i]);
+                  }
+               }
             }
          }
-         System.out.println(num);
+         directionsRefined.add(numArray);
       }
    }
 
-   private static void processDirections(Integer numberOfCrates, Integer startingNumber, Integer endingNumber){
-      Stack<String>startingStack = null;
-      Stack<String>endingStack = null;
-      switch (startingNumber) {
-            case 1:
-               startingStack = stack1;
-               break;
-            case 2:
-               startingStack = stack2;
-               break;
-            case 3:
-               startingStack = stack3;
-               break;
-            case 4:
-               startingStack = stack4;
-               break;
-            case 5:
-               startingStack = stack5;
-               break;
-            case 6:
-               startingStack = stack6;
-               break;
-            case 7:
-               startingStack = stack7;
-               break;
-            case 8:
-               startingStack = stack8;
-               break;
-            case 9:
-               startingStack = stack9;
-               break;
-            default:
-               break;
-         }
-      switch (endingNumber) {
-            case 1:
-               endingStack = stack1;
-               break;
-            case 2:
-               endingStack = stack2;
-               break;
-            case 3:
-               endingStack = stack3;
-               break;
-            case 4:
-               endingStack = stack4;
-               break;
-            case 5:
-               endingStack = stack5;
-               break;
-            case 6:
-               endingStack = stack6;
-               break;
-            case 7:
-               endingStack = stack7;
-               break;
-            case 8:
-               endingStack = stack8;
-               break;
-            case 9:
-               endingStack = stack9;
-               break;
-            default:
-               break;
+   private static void processDirections(Integer numberOfCrates, Integer startingStack, Integer endingStack){
+      switch (startingStack) {
+         case 1:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack1.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;
+         case 2:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack2.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;
+         case 3:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack3.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;
+         case 4:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack4.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;
+         case 5:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack5.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;
+         case 6:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack6.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;
+         case 7:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack7.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;
+         case 8:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack8.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;
+         case 9:
+            for ( int i = 1; i <= numberOfCrates; i++){ 
+               String crate = stack9.pop();
+               switch (endingStack){
+                  case 1:
+                     stack1.push(crate);
+                     break;
+                  case 2:
+                     stack2.push(crate);
+                     break;
+                  case 3:
+                     stack3.push(crate);
+                     break;
+                  case 4:
+                     stack4.push(crate);
+                     break;
+                  case 5:
+                     stack5.push(crate);
+                     break;
+                  case 6:
+                     stack6.push(crate);
+                     break;
+                  case 7:
+                     stack7.push(crate);
+                     break;
+                  case 8:
+                     stack8.push(crate);
+                     break;
+                  case 9:
+                     stack9.push(crate);
+                     break;
+               }
+            }  
+            break;      
       }
+   }
 
-      for ( int i = 1; i < numberOfCrates; i++){ 
-         String crate = startingStack.pop();
-         endingStack.push(crate);  
-      }  
-      
+   private static void printTopCrates(){
+      System.out.println(stack1.peek() + stack2.peek() + stack3.peek() + stack4.peek() + stack5.peek() + stack6.peek() + stack7.peek() + stack8.peek() + stack9.peek());
    }
 }
