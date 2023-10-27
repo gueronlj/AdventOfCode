@@ -192,6 +192,7 @@ public class day5 {
       for ( int i = 1; i < numberOfCrates; i++){ 
          String crate = startingStack.pop();
          endingStack.push(crate);  
-      }     
-   }  
+      }  
+      
+   }
 }
