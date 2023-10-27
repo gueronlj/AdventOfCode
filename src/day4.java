@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class day4 {
    public static ArrayList<String[]> pairs = new ArrayList<>();
    public static ArrayList<Integer[]> intRanges = new ArrayList<>();
-
    public static int overlaps = 0;
    public static void main(String[] args) {
       fileIntake("cleaning-zones.txt");
