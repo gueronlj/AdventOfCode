@@ -21,17 +21,10 @@ public class day5 {
    public static void main(String[] args){   
       readFile("day5.txt");
       buildStacks();
-      extractNumberFromDirections(directionsRaw);
-      //print directionsRefined
-      for(Integer[] line : directionsRefined){
-         for(Integer i : line){
-            System.out.print(i + " ");
-         }
-         System.out.println();
+      extractNumberFromDirections(directionsRaw);     
+      for(Integer[] array : directionsRefined){
+         updatedProcess(array[0], array[1], array[2]);
       }
-      for (Integer[] line : directionsRefined) {
-         processDirections(line[0], line[1], line[2]);
-      } 
       printStacks();
       printTopCrates(); 
    }
@@ -452,5 +445,190 @@ public class day5 {
 
    private static void printTopCrates(){
       System.out.println(stack1.peek() + stack2.peek() + stack3.peek() + stack4.peek() + stack5.peek() + stack6.peek() + stack7.peek() + stack8.peek() + stack9.peek());
+   }
+
+   private static void updatedProcess(Integer numberOfCrates, Integer startingStack, Integer endingStack){
+      ArrayList<String> crates = new ArrayList<>();
+      ArrayList<String> cratesReversed = new ArrayList<>();
+      switch (startingStack){
+         case 1:
+            if(numberOfCrates > stack1.size()){
+               numberOfCrates = stack1.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack1.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+         case 2:
+            if(numberOfCrates > stack2.size()){
+               numberOfCrates = stack2.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack2.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+         case 3:
+            if(numberOfCrates > stack3.size()){
+               numberOfCrates = stack3.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack3.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+         case 4:
+            if(numberOfCrates > stack4.size()){
+               numberOfCrates = stack4.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack4.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+         case 5:
+            if(numberOfCrates > stack5.size()){
+               numberOfCrates = stack5.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack5.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+         case 6:
+            if(numberOfCrates > stack6.size()){
+               numberOfCrates = stack6.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack6.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+         case 7:
+            if(numberOfCrates > stack7.size()){
+               numberOfCrates = stack7.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack7.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+         case 8:
+            if(numberOfCrates > stack8.size()){
+               numberOfCrates = stack8.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack8.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+         case 9:
+            if(numberOfCrates > stack9.size()){
+               numberOfCrates = stack9.size();
+            }
+            //remove crates from stack
+            for (int i = 0 ; i< numberOfCrates; i++){
+               String crate = stack9.pop();
+               crates.add(crate);
+            }
+            //reverse order of crates
+            for (int i = crates.size()-1; i >= 0; i--){
+               cratesReversed.add(crates.get(i));
+            }
+            //put crates on correct stack
+            addCratesToStack(cratesReversed, endingStack);
+            break;
+      }
+   }
+
+   private static void addCratesToStack(ArrayList<String> cratesToAdd, Integer targetStack){
+      for (String crate : cratesToAdd){ 
+         switch(targetStack){
+            case 1:
+               stack1.push(crate);
+               break;
+            case 2:
+               stack2.push(crate);
+               break;
+            case 3:
+               stack3.push(crate);
+               break;
+            case 4:
+               stack4.push(crate);
+               break;
+            case 5:
+               stack5.push(crate);
+               break;
+            case 6:
+               stack6.push(crate);
+               break;
+            case 7:
+               stack7.push(crate);
+               break;
+            case 8:
+               stack8.push(crate);
+               break;   
+            case 9:
+               stack9.push(crate);
+               break;
+         }
+      }
    }
 }
